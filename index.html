@@ -3,57 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>bilder</title>
+    <title>Stranger Notes</title>
 
     <style>
         body {
             margin: 0;
             background: white;
-
+            width: 100vw;
+            height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-
-            min-height: 100vh;
+            cursor: pointer;
         }
 
         #bild {
             max-width: 90vw;
-            max-height: 80vh;
+            max-height: 90vh;
             object-fit: contain;
-        }
-
-        button {
-            margin-top: 30px;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
         }
     </style>
 </head>
 
 <body>
-
-    <img id="bild" src="bilder/bild1.png" alt="Bild">
-
-    <button onclick="zufaelligesBild()">Random Note</button>
-
+    <img id="bild" alt="">
 
     <script>
+        let bilder = [];
+        let aktuellesBild = -1;
 
-        const bilder = [
-            "bilder/bild1.png",
-            "bilder/bild2.png",
-            "bilder/bild3.png",
-            "bilder/bild4.png",
-            "bilder/bild5.png"
-        ];
+        fetch("bildliste.txt")
+            .then(response => response.text())
+            .then(text => {
+                bilder = text.split("\n")
+                    .map(name => name.trim())
+                    .filter(name => name !== "");
 
-        let aktuellesBild = 0;
+                naechstesBild();
+            });
 
-        function zufaelligesBild() {
+        function naechstesBild() {
+            if (bilder.length === 0) return;
 
             let neuesBild;
 
@@ -63,10 +53,11 @@
 
             aktuellesBild = neuesBild;
 
-            document.getElementById("bild").src = bilder[aktuellesBild];
+            document.getElementById("bild").src =
+                "bilder/" + bilder[aktuellesBild];
         }
 
+        document.body.addEventListener("click", naechstesBild);
     </script>
-
 </body>
 </html>
