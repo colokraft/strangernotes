@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>bilder</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: white;
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+
+            min-height: 100vh;
+        }
+
+        #bild {
+            max-width: 90vw;
+            max-height: 80vh;
+            object-fit: contain;
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <img id="bild" src="bilder/bild1.png" alt="Bild">
+
+    <button onclick="zufaelligesBild()">Random Note</button>
+
+
+    <script>
+
+        const bilder = [
+            "bilder/bild1.png",
+            "bilder/bild2.png",
+            "bilder/bild3.png",
+            "bilder/bild4.png",
+            "bilder/bild5.png"
+        ];
+
+        let aktuellesBild = 0;
+
+        function zufaelligesBild() {
+
+            let neuesBild;
+
+            do {
+                neuesBild = Math.floor(Math.random() * bilder.length);
+            } while (neuesBild === aktuellesBild && bilder.length > 1);
+
+            aktuellesBild = neuesBild;
+
+            document.getElementById("bild").src = bilder[aktuellesBild];
+        }
+
+    </script>
+
+</body>
+</html>
